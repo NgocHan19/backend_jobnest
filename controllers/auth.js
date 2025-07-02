@@ -57,9 +57,9 @@ export const registerPoster = async (req, res, next) => {
 };
 export const login = async (req, res, next) => {
   try {
-      //const user = await User.findOne({ email: req.body.email });
-      const email = req.body.email?.trim().toLowerCase();
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ email: req.body.email });
+      //const email = req.body.email?.trim().toLowerCase();
+      //const user = await User.findOne({ email });
       if (!user) return next(createError(404, "Không tìm thấy email!"));
 
       if (user.role === "job_poster" && !user.isVerified) {
