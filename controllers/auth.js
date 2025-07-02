@@ -27,7 +27,7 @@ export const register=async(req,res,next)=>{
 export const registerPoster = async (req, res, next) => {
   try {
       const { email, password, role } = req.body;
-      const existingUser = await User.findOne({ email });
+      const existingUser = await User.findOne({  email: new RegExp(`^${req.body.email}$`, 'i') });
       if (existingUser) return next(createError(400, "Email đã tồn tại!"));
 
       const salt = bcrypt.genSaltSync(10);
@@ -57,9 +57,8 @@ export const registerPoster = async (req, res, next) => {
 };
 export const login = async (req, res, next) => {
   try {
+    console.log("🔵 Email nhận được:", req.body.email);
       const user = await User.findOne({ email: req.body.email });
-      //const email = req.body.email?.trim().toLowerCase();
-      //const user = await User.findOne({ email });
       if (!user) return next(createError(404, "Không tìm thấy email!"));
 
       if (user.role === "job_poster" && !user.isVerified) {
