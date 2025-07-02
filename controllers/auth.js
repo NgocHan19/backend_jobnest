@@ -42,7 +42,7 @@ export const registerPoster = async (req, res, next) => {
       await newUser.save();
       
       if (role === "job_poster") {
-        const googleFormLink = "https://docs.google.com/forms/d/e/1FAIpQLSdCb3-ArRdXrOLMZ4Aqu1epiA18tRS1zsurqsxe1tmUE2inCw/viewform?usp=sharing";
+        const googleFormLink = "https://docs.google.com/forms/d/e/1FAIpQLSc5cKQCUlh_8NRETX4Id7JMv4MJZfGlx8QWMT9FEITqruYpfA/viewform?usp=sharing&ouid=116443759114016161269";
         console.log("Sending confirmation email for job_poster to:", email);
         const emailSubject = "Xác nhận đăng ký nhà tuyển dụng";
         const emailText = `Vui lòng điền form sau để xác thực: ${googleFormLink}`;
@@ -57,7 +57,9 @@ export const registerPoster = async (req, res, next) => {
 };
 export const login = async (req, res, next) => {
   try {
-      const user = await User.findOne({ email: req.body.email });
+      //const user = await User.findOne({ email: req.body.email });
+      const email = req.body.email?.trim().toLowerCase();
+      const user = await User.findOne({ email });
       if (!user) return next(createError(404, "Không tìm thấy email!"));
 
       if (user.role === "job_poster" && !user.isVerified) {
