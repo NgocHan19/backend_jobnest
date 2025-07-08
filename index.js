@@ -14,7 +14,7 @@ import user from './routes/user.js';
 import category from './routes/category.js'
 import benefit from './routes/benefit.js';
 import profile from './routes/profile.js';
-import auth from './routes/auth.js';
+
 //--------------------------------------------------------------------
 const app=express();
 app.use(cors());
@@ -26,7 +26,7 @@ app.use('/company/',company);
 app.use('/job/',job);
 app.use('/category/',category);
 app.use('/user/',user);
-app.use('/auth/', auth);
+
 app.use('/benefit/',benefit);
 app.use('/profile/',profile);
 app.use('/uploads', express.static('uploads'));
