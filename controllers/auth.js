@@ -57,25 +57,37 @@ export const registerPoster = async (req, res, next) => {
 };
 export const login = async (req, res, next) => {
   try {
-    console.log("🔵 Email nhận được:", req.body.email);
-      const user = await User.findOne({ email: req.body.email });
-      if (!user) return next(createError(404, "Không tìm thấy email!"));
+    // 📌 Log đầu vào từ client
+    console.log("📥 Email nhập:", req.body.email);
+    console.log("📥 Mật khẩu nhập:", req.body.password);
 
-      if (user.role === "job_poster" && !user.isVerified) {
-          return next(createError(403, "Tài khoản chưa được xác minh!"));
-      }
+    // 📌 Tìm người dùng
+    const user = await User.findOne({ email: req.body.email });
+    console.log("🔍 Tìm thấy user:", user);
 
-      const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password);
-      if (!isPasswordCorrect) return next(createError(400, "Sai mật khẩu!"));
+    if (!user) return next(createError(404, "Không tìm thấy email!"));
 
-      const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT);
+    // 📌 Kiểm tra xác minh cho job_poster
+    if (user.role === "job_poster" && !user.isVerified) {
+      console.log("⛔ Tài khoản job_poster chưa xác minh.");
+      return next(createError(403, "Tài khoản chưa được xác minh!"));
+    }
 
-      const { password, ...otherDetails } = user._doc;
-      res
-          .cookie("access_token", token, { httpOnly: true })
-          .status(200)
-          .json({ details: { ...otherDetails }, token, role: user.role });
+    // 📌 So sánh mật khẩu
+    const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password);
+    console.log("🔑 Mật khẩu đúng?", isPasswordCorrect);
+
+    if (!isPasswordCorrect) return next(createError(400, "Sai mật khẩu!"));
+
+    // 📌 Tạo token và trả về
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT);
+
+    const { password, ...otherDetails } = user._doc;
+    res
+      .cookie("access_token", token, { httpOnly: true })
+      .status(200)
+      .json({ details: { ...otherDetails }, token, role: user.role });
   } catch (err) {
-      next(err);
+    next(err);
   }
 };

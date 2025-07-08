@@ -10,16 +10,8 @@ import {
     countUsers
 } from '../controllers/user.js';
 
-import { register, login, registerPoster } from '../controllers/auth.js';
-import { forgotPassword, verifyResetCode } from '../controllers/forgotPassword.js';
-
 const user = express.Router();
 
-user.post('/register', register);
-user.post('/registerPoster', registerPoster);
-user.post('/login', login);
-user.post('/forgotPassword', forgotPassword);
-user.post('/verifyResetCode', verifyResetCode);
 user.get('/count', countUsers);
 user.get('/', getUserAll);
 user.post('/add/', addUser);
