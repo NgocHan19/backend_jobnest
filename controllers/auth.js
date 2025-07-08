@@ -64,7 +64,9 @@ export const login = async (req, res, next) => {
     console.log("📥 Mật khẩu nhập:", req.body.password);
 
     // 📌 Tìm người dùng
-    const user = await User.findOne({ email: req.body.email });
+    const inputEmail = req.body.email.trim();
+    //const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ email: new RegExp(`^${inputEmail}$`, 'i') });
     console.log("🔍 Tìm thấy user:", user);
 
     if (!user) return next(createError(404, "Không tìm thấy email!"));
