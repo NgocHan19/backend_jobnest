@@ -1,5 +1,8 @@
-import express from 'express';
 import dotenv from 'dotenv';
+dotenv.config();
+//console.log("🔐 JWT_SECRET:", process.env.JWT_SECRET);
+
+import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -14,17 +17,16 @@ import profile from './routes/profile.js';
 import auth from './routes/auth.js';
 //--------------------------------------------------------------------
 const app=express();
-dotenv.config();
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 //-----------------------CAC ROUTES-----------------------------------
 app.use('/application/',application);
-app.use('/auth/', auth);
 app.use('/company/',company);
 app.use('/job/',job);
 app.use('/category/',category);
 app.use('/user/',user);
+app.use('/auth/', auth);
 app.use('/benefit/',benefit);
 app.use('/profile/',profile);
 app.use('/uploads', express.static('uploads'));
