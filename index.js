@@ -1,7 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
 //console.log("🔐 JWT_SECRET:", process.env.JWT_SECRET);
-
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
@@ -26,7 +25,6 @@ app.use('/company/',company);
 app.use('/job/',job);
 app.use('/category/',category);
 app.use('/user/',user);
-
 app.use('/benefit/',benefit);
 app.use('/profile/',profile);
 app.use('/uploads', express.static('uploads'));

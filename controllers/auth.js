@@ -80,7 +80,9 @@ export const login = async (req, res, next) => {
     if (!isPasswordCorrect) return next(createError(400, "Sai mật khẩu!"));
 
     // 📌 Tạo token và trả về
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET);
+    //const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+
 
     const { password, ...otherDetails } = user._doc;
     res
