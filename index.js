@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
-dotenv.config();
-//console.log("🔐 JWT_SECRET:", process.env.JWT_SECRET);
+
+console.log("🔐 JWT_SECRET:", process.env.JWT_SECRET);
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
@@ -15,6 +15,7 @@ import benefit from './routes/benefit.js';
 import profile from './routes/profile.js';
 
 //--------------------------------------------------------------------
+dotenv.config();
 const app=express();
 app.use(cors());
 app.use(cookieParser());
@@ -54,7 +55,7 @@ mongoose.connection.on('error',(err)=>{
     console.log(`Lỗi kết nối cơ sở dữ liệu: ${err.message}`);
 });
 
-const PORT =process.env.PORT;
+const PORT =process.env.PORT|| 5000;
 app.listen(PORT,()=>{
     connectMongoDB();
     console.log(`Server đang chạy tại http://localhost:${PORT}`);
