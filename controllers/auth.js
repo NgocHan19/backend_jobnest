@@ -57,6 +57,8 @@ export const registerPoster = async (req, res, next) => {
 };
 export const login = async (req, res, next) => {
   try {
+    console.log("📦 Full req.body:", req.body);
+
     // 📌 Log đầu vào từ client
     console.log("📥 Email nhập:", req.body.email);
     console.log("📥 Mật khẩu nhập:", req.body.password);

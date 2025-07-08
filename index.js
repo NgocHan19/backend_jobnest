@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+dotenv.config();
 
 console.log("🔐 JWT_SECRET:", process.env.JWT_SECRET);
 import express from 'express';
@@ -15,7 +16,6 @@ import benefit from './routes/benefit.js';
 import profile from './routes/profile.js';
 
 //--------------------------------------------------------------------
-dotenv.config();
 const app=express();
 app.use(cors());
 app.use(cookieParser());
@@ -33,6 +33,7 @@ app.use('/uploads', express.static('uploads'));
 //--------------------------------------------------------------------
 app.use((err,req,res,next)=>{
     const errorStatus = err.status||500;
+    console.log("📦 Body:", req.body);
     const errorMessage = err.message|| 'Đã xảy ra lỗi!!';
     return res.status(errorStatus).json({
         success: false,
