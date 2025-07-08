@@ -7,30 +7,21 @@ import {
     getUserAll, 
     deleteUserId, 
     deleteUserAll, 
-    countUsers
-} from '../controllers/user.js';
-
-import { register, login, registerPoster } from '../controllers/auth.js';
+    countUsers  } from '../controllers/user.js';
+import { register,login,registerPoster } from '../controllers/auth.js';
 import { forgotPassword, verifyResetCode } from '../controllers/forgotPassword.js';
-
-const router = express.Router();  // ✅ Dùng 1 router duy nhất
-
-// --------- AUTH ROUTES ----------
-router.post('/register', register);
-router.post('/registerPoster', registerPoster);
-router.post('/login', login);
-router.post('/forgotPassword', forgotPassword);
-router.post('/verifyResetCode', verifyResetCode);
-
-// --------- USER ROUTES ----------
-router.get('/count', countUsers);
-router.get('/', getUserAll);
-router.post('/add/', addUser);
-router.put('/', updateUserAll);
-router.delete('/', deleteUserAll);
-
-router.get('/:id', getUserId);
-router.put('/:id', updateUserId);
-router.delete('/:id', deleteUserId);
-
-export default router;  // ✅ Export đúng router
+const user=express.Router();
+user.get('/count', countUsers); 
+user.get('/:id',getUserId);
+user.post('/register',register);
+user.post('/registerPoster',registerPoster);
+user.post('/login',login);
+user.put('/:id', updateUserId); 
+user.put('/', updateUserAll); 
+user.get('/', getUserAll); 
+user.post('/add/', addUser); 
+user.delete('/:id', deleteUserId); 
+user.delete('/', deleteUserAll);
+user.post("/forgotPassword", forgotPassword);
+user.post('/verifyResetCode', verifyResetCode);
+export default user;
