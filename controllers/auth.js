@@ -86,9 +86,10 @@ export const login = async (req, res, next) => {
 
     // 📌 Tạo token và trả về
     //const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET);
-    const secret = process.env.JWT_SECRET || "tạm_thời";
-    console.log("🔐 JWT_SECRET:", process.env.JWT_SECRET);
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+const secret = process.env.JWT_SECRET || "tạm_thời";
+console.log("🔐 JWT_SECRET:", secret);
+const token = jwt.sign({ id: user._id }, secret, { expiresIn: '1d' });
+
 
     const { password, ...otherDetails } = user._doc;
     res
