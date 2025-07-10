@@ -1,10 +1,11 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import createError from 'http-errors';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.js'
 import bcrypt from 'bcryptjs';
-import dotenv from 'dotenv';
 import { sendEmail } from '../utils/email.js'; 
-//dotenv.config();
+
 export const register=async(req,res,next)=>{
     try{
         const salt = bcrypt.genSaltSync(10);
@@ -85,9 +86,9 @@ export const login = async (req, res, next) => {
 
     // 📌 Tạo token và trả về
     //const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET);
+    const secret = process.env.JWT_SECRET || "tạm_thời";
     console.log("🔐 JWT_SECRET:", process.env.JWT_SECRET);
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-
 
     const { password, ...otherDetails } = user._doc;
     res
